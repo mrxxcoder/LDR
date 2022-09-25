@@ -9,6 +9,9 @@ const music = document.querySelector('audio');
 const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
+const showVolume = document.querySelector("#show-volume");
+const volumeIcon = document.querySelector("#volume-icon");
+const currentVolume = document.querySelector("#volume");
 
 // Music 
 
@@ -52,9 +55,51 @@ const songs = [
     {
         name:'10',
         displayName : 'National Anthem'
-    }
+    },
+    {
+        name:'11',
+        displayName : 'Burning Desire'
+    },
+    {
+        name:'12',
+        displayName : 'Money Power Glory'
+    },
+    {
+        name:'13',
+        displayName : 'White Mustang'
+    },
+    {
+        name:'14',
+        displayName : 'Cherry'
+    },
+    {
+        name:'15',
+        displayName : 'Doin Time'
+    },
+    {
+        name:'16',
+        displayName : 'Ride'
+    },
+    {
+        name:'17',
+        displayName : 'The Blackest Day'
+    },
+    {
+        name:'18',
+        displayName : 'Diet Mountain Dew'
+    },
+    {
+        name:'19',
+        displayName : 'In My Feelings'
+    },
+    {
+        name:'20',
+        displayName : 'Young And Beautiful'
+    },
 ];
 let isPlaying = false;
+
+
 
 // Play
 
@@ -72,18 +117,6 @@ const pauseSong = () => {
     playBtn.setAttribute('title', 'Play');
     music.pause();
 }
-
-// Shuffle song
-
-function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-  console.log(arr);
-  }
-  let arr = [1, 2, 3, 4, 5];
-  shuffleArray(arr);
 
 // play or pause Event Listeners 
 
@@ -122,6 +155,19 @@ const nextSong = () => {
     }
     loadSong(songs[songIndex]);
     playSong();
+}
+
+// Mute Sound
+function muteSound() {
+    music.volume = 0;
+    showVolume.innerHTML = 0;
+    currentVolume.value = 0;
+}
+
+  // Change Volume
+function changeVolume() {
+    showVolume.value = currentVolume.value;
+    music.volume = currentVolume.value / 100;
 }
 
 // On Load - Select First Song
@@ -166,9 +212,11 @@ function setProgressBar(e) {
 }
 
 // Event Listeners
-
+volumeIcon.addEventListener("click", muteSound);
+currentVolume.addEventListener("change", changeVolume);
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
 music.addEventListener('timeupdate', updateProgressBar);
 music.addEventListener('ended', nextSong);
 progressContainer.addEventListener('click', setProgressBar);
+
